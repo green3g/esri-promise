@@ -18,14 +18,19 @@ function dojoPromise(modules) {
         });
     });
 }
+var DEFAULT_URL = 'https://js.arcgis.com/4.5/';
+var promise;
 function esriBootstrap(url, dojoConfig) {
-    return new es6_promise_1.Promise(function (resolve, reject) {
+    if (promise) {
+        return promise;
+    }
+    promise = new es6_promise_1.Promise(function (resolve, reject) {
         if (isLoaded()) {
             // If the API is already loaded, reject with an error message.
             reject('The ArcGIS API for JavaScript has already been loaded!');
         }
         if (!url) {
-            url = 'https://js.arcgis.com/4.4/';
+            url = DEFAULT_URL;
         }
         if (dojoConfig) {
             window['dojoConfig'] = dojoConfig;
@@ -41,6 +46,7 @@ function esriBootstrap(url, dojoConfig) {
         script.onerror = reject;
         document.body.appendChild(script);
     });
+    return promise;
 }
 exports.esriBootstrap = esriBootstrap;
 function esriPromise(modules) {

@@ -15,15 +15,21 @@ function dojoPromise(modules: string[]): Promise<any> {
     });
 }
 
+const DEFAULT_URL:string= 'https://js.arcgis.com/4.5/';
+let promise:Promise<any>;
+
 export function esriBootstrap(url?: string, dojoConfig?: { [propName: string]: any }): Promise<any> {
-    return new Promise((resolve, reject) => {
+    if(promise){
+        return promise;
+    }
+    promise = new Promise((resolve, reject) => {
         if (isLoaded()) {
             // If the API is already loaded, reject with an error message.
             reject('The ArcGIS API for JavaScript has already been loaded!');
         }
 
         if (!url) {
-            url = 'https://js.arcgis.com/4.4/';
+            url = DEFAULT_URL;
         }
 
         if (dojoConfig) {
@@ -41,6 +47,7 @@ export function esriBootstrap(url?: string, dojoConfig?: { [propName: string]: a
         script.onerror = reject;
         document.body.appendChild(script);
     });
+    return promise;
 }
 
 export function esriPromise(modules: string[]): Promise<any> {
