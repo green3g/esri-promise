@@ -1,4 +1,3 @@
-import { Promise } from 'es6-promise';
 import esriPromise, { esriBootstrap } from '../index';
 
 const package_path = window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/'));

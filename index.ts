@@ -1,5 +1,3 @@
-import { Promise } from 'es6-promise';
-
 function isLoaded(): boolean {
     return typeof window['require'] !== 'undefined';
 }
